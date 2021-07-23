@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('preparation') {
             steps {
-                sh 'sudo usermod -a -G docker ubuntu'
+                sh '''
+                   whoami
+                   sudo usermod -a -G docker ubuntu
+                '''
             }
         }
         stage('build') {
