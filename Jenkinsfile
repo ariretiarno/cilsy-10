@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('preparation') {
             steps {
-                sh 'sudo usermod -a -G docker ec2-user'
+                sh 'sudo usermod -a -G docker ubuntu'
             }
         }
         stage('build') {
