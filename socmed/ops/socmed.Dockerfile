@@ -34,11 +34,11 @@ COPY supervisor.conf /etc/supervisor/supervisord.conf
 RUN mkdir /run/php && mkdir -p /var/www/apps
 
 COPY . /var/www/apps/
-COPY www.conf /etc/php/7.2/fpm/pool.d/
-COPY php7proxy /etc/nginx/php7proxy
-COPY nginx.conf /etc/nginx/
-COPY apps.conf /etc/nginx/conf.d/apps.conf
-COPY php.ini /etc/php/7.2/fpm
+COPY ops/www.conf /etc/php/7.2/fpm/pool.d/
+COPY ops/php7proxy /etc/nginx/php7proxy
+COPY ops/nginx.conf /etc/nginx/
+COPY ops/apps.conf /etc/nginx/conf.d/apps.conf
+COPY ops/php.ini /etc/php/7.2/fpm
 
 EXPOSE 8000
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
