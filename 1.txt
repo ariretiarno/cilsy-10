@@ -1,3 +1,0 @@
-first pipeline
-second pipeline
-third pipeline
