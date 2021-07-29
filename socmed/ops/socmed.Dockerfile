@@ -31,8 +31,9 @@ RUN apt-get update && \
 	apt-get install -y supervisor --no-install-recommends && \
 	rm -rf /var/lib/apt/lists/*
 COPY supervisor.conf /etc/supervisor/supervisord.conf
-RUN mkdir /run/php
+RUN mkdir /run/php && mkdir -p /var/www/apps
 
+COPY . /var/www/apps/
 COPY www.conf /etc/php/7.2/fpm/pool.d/
 COPY php7proxy /etc/nginx/php7proxy
 COPY nginx.conf /etc/nginx/
