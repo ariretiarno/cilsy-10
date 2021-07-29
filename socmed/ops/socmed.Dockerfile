@@ -30,7 +30,7 @@ RUN useradd -ms /bin/bash nginx
 RUN apt-get update && \
 	apt-get install -y supervisor --no-install-recommends && \
 	rm -rf /var/lib/apt/lists/*
-COPY supervisor.conf /etc/supervisor/supervisord.conf
+COPY ops/supervisor.conf /etc/supervisor/supervisord.conf
 RUN mkdir /run/php && mkdir -p /var/www/apps
 
 COPY . /var/www/apps/
