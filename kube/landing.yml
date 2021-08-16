@@ -26,7 +26,7 @@ spec:
       containers:
       - name: landing 
         imagePullPolicy: Always
-        image: cilsyari/cilsy:landingpage-3
+        image: cilsyari/cilsy:appversion
         ports:
         - containerPort: 80
 ---
