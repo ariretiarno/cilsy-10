@@ -24,6 +24,7 @@ pipeline {
                 sh '''
                     sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
                     sed -i -e "s/appversion/$BUILD_ID/" kube/socmed.yml
+                    cat kube/landing.yml && cat kube/socmed.yml
                 '''
                 script {
                     kubernetesDeploy(configs: "kube/landing.yml", kubeconfigId: "kube-ari")
