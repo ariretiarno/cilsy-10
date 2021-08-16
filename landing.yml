@@ -1,38 +1,32 @@
 ---
-apiVersion: apps/v1
+apiVersion: v1
+kind: Service
+metadata:
+  name: landing
+spec:
+  selector:
+    app: landing
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion : apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: myweb
-  name: myweb
+  name: landing 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myweb
+      app: landing
   template:
     metadata:
       labels:
-        app: myweb
+        app: landing 
     spec:
       containers:
-      - image: 192.168.1.81:5000/justme/myweb:1
+      - name: landing 
         imagePullPolicy: Always
-        name: myweb
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: myweb
-  name: myweb
-spec:
-  ports:
-  - nodePort: 32223
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: myweb
-  type: NodePort
+        image: cilsyari/cilsy:landingpage-appversion
+        ports:
+        - containerPort: 80
