@@ -27,11 +27,11 @@ pipeline {
                     cat kube/landing.yml && cat kube/socmed.yml
                 '''
                 script {
-                    kubernetesDeploy(configs: "kube/landing.yml", kubeconfigId: "kube-ari")
-                }
+                    kubernetesDeploy(configs: "landing.yml", kubeconfigId: "kube-ari")
+                }/*
                 script {
                     kubernetesDeploy(configs: "kube/socmed.yml", kubeconfigId: "kube-ari")
-                }
+                }*/
             }
             /*steps ('landing') {
                 script {
