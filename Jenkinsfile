@@ -42,7 +42,7 @@ pipeline {
         }
         stage ('deploy to k8s cluster') {
             steps {
-                sshagent(credentials : ['jenkins-deploy-vunite']){
+                sshagent(credentials : ['k8s-master-ari']){
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id touch /home/ubuntu/masuk'
                 }
             }
