@@ -43,7 +43,7 @@ pipeline {
         stage ('deploy to k8s cluster') {
             steps {
                 sshagent(credentials : ['k8s-master-ari']){
-                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id whoami && pwd'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id pwd && pwd'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id cd /home/ubuntu/jenkins && ls -lah && tar -xvzf manifest.tar.gz && cat kube/landing.yml'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id cd /home/ubuntu/jenkins && tar -xvzf manifest.tar.gz'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id cd /home/ubuntu/jenkins && kubectl apply -f kube'
