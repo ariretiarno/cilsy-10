@@ -19,7 +19,36 @@ pipeline {
                 '''
             }
         }
-        stage ('deploy to k8s') {
+        stage ('change manifest file and send') {
+            steps {
+                sh '''
+                    sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
+                    sed -i -e "s/appversion/$BUILD_ID/" kube/socmed.yml
+                    tar -czvf manifest.tar.gz kube/landing.yml kube/socmed.yml
+
+                '''
+                sshPublisher(
+                    continueOnError: false, 
+                    failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: "k8s-master-ari",
+                            transfers: [sshTransfer(sourceFiles: 'manifest.tar.gz', remoteDirectory: 'jenkins/')],
+                            verbose: true
+                        )
+                    ]
+                )
+            }
+        }
+        /*stage ('deploy to k8s cluster') {
+            steps {
+                sh '''
+                    sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
+                    sed -i -e "s/appversion/$BUILD_ID/" kube/socmed.yml
+                '''
+            }
+        }
+        /*stage ('deploy to k8s') {
             steps {
                 sh '''
                     sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
@@ -28,12 +57,12 @@ pipeline {
                 '''
                 script {
                     kubernetesDeploy(kubeconfigId: 'kube-ari', configs: 'landing.yml' )
-                }/*
+                }
                 script {
                     kubernetesDeploy(configs: "kube/socmed.yml", kubeconfigId: "kube-ari")
-                }*/
+                }
             }
-            /*steps ('landing') {
+            steps ('landing') {
                 script {
                     kubernetesDeploy(configs: "kube/landing.yml", kubeconfigId: "kube-ari")
                 }
@@ -42,7 +71,7 @@ pipeline {
                 script {
                     kubernetesDeploy(configs: "kube/socmed.yml", kubeconfigId: "kube-ari")
                 }
-            }*/
-        }
+            }
+        }*/
     }
 }
