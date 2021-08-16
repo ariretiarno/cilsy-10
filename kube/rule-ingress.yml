@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: s-ingress
+  annotations:
+    nginx.org/client-max-body-size: "10m"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+  - host: landing.retiarno.my.id
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: landing
+          servicePort: 80
+  - host: socmed.retiarno.my.id
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: socmed
+          servicePort: 8000

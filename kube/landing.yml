@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: landing
+spec:
+  selector:
+    app: landing
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: landing 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: landing
+  template:
+    metadata:
+      labels:
+        app: landing 
+    spec:
+      containers:
+      - name: landing 
+        imagePullPolicy: Always
+        image: cilsyari/cilsy:landingpage-3
+        ports:
+        - containerPort: 80
+---
