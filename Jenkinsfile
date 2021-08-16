@@ -32,7 +32,7 @@ pipeline {
                     failOnError: true,
                     publishers: [
                         sshPublisherDesc(
-                            configName: "k8s-master-ari",
+                            configName: "k8s-master",
                             transfers: [sshTransfer(sourceFiles: 'manifest.tar.gz', remoteDirectory: 'jenkins/')],
                             verbose: true
                         )
