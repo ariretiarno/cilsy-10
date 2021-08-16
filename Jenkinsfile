@@ -40,12 +40,11 @@ pipeline {
                 )
             }
         }
-        /*stage ('deploy to k8s cluster') {
+        stage ('deploy to k8s cluster') {
             steps {
-                sh '''
-                    sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
-                    sed -i -e "s/appversion/$BUILD_ID/" kube/socmed.yml
-                '''
+                sshagent(credentials : ['jenkins-deploy-vunite']){
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@api.kubernetes.retiarno.my.id touch /home/ubuntu/masuk'
+                }
             }
         }
         /*stage ('deploy to k8s') {
