@@ -5,24 +5,26 @@ pipeline {
             steps {
                 sh '''
                     printenv
-                    sudo docker build -t cilsyari/cilsy:socmed-$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
+                    sudo docker build -t cilsyari/socmed:$GIT_BRANCH-$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
                     sudo docker login -u cilsyari -p$DOCKER_TOKEN
-                    sudo docker push cilsyari/cilsy:socmed-$BUILD_ID
+                    sudo docker push cilsyari/socmed:$GIT_BRANCH-$BUILD_ID
                 '''
             }
         }
         stage ('build landingpage') {
             steps {
                 sh '''
-                    sudo docker build -t cilsyari/cilsy:landingpage-$BUILD_ID -f landingpage/landingpage.Dockerfile .
+                    sudo docker build -t cilsyari/landingpage:$GIT_BRANCH-$BUILD_ID -f landingpage/landingpage.Dockerfile .
                     sudo docker login -u cilsyari -p$DOCKER_TOKEN
-                    sudo docker push cilsyari/cilsy:landingpage-$BUILD_ID
+                    sudo docker push cilsyari/landingpage:$GIT_BRANCH-$BUILD_ID
                 '''
             }
         }
         stage ('change manifest file and send') {
             steps {
                 sh '''
+                    sed -i -e "s/branch/$GIT_BRANCH/" kube/landing.yml
+                    sed -i -e "s/branch/$GIT_BRANCH/" kube/socmed.yml
                     sed -i -e "s/appversion/$BUILD_ID/" kube/landing.yml
                     sed -i -e "s/appversion/$BUILD_ID/" kube/socmed.yml
                     tar -czvf manifest.tar.gz kube/landing.yml kube/socmed.yml

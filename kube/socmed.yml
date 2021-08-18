@@ -26,7 +26,7 @@ spec:
       containers:
       - name: socmed 
         imagePullPolicy: Always
-        image: cilsyari/cilsy:socmed-appversion
+        image: cilsyari/socmed:branch-appversion
         ports:
         - containerPort: 8000
 ---
