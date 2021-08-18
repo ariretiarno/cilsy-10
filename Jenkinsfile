@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh '''
                     printenv
-                    sudo docker build -t cilsyari/socmed:$GIT_BRANCH-$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
+                    sudo docker build -t cilsyari/socmed:$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
                     sudo docker login -u cilsyari -p$DOCKER_TOKEN
                     sudo docker push cilsyari/socmed:$GIT_BRANCH-$BUILD_ID
                 '''
