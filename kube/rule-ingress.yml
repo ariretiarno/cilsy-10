@@ -21,3 +21,10 @@ spec:
         backend:
           serviceName: socmed
           servicePort: 8000
+  - host: jenkins.ari-k8s.retiarno.my.id
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jenkins
+          servicePort: 8080
