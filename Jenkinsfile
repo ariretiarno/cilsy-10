@@ -4,7 +4,7 @@ pipeline {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    label 'jenkinsrun'
+                    label 'builder'
                     defaultContainer 'builder'
                     yaml """
                         apiVersion: v1
@@ -13,7 +13,7 @@ pipeline {
                           name: kaniko
                         spec:
                           containers:
-                          - name: builder
+                          - name: jnlp
                             image: gcr.io/kaniko-project/executor:latest
                             imagePullPolicy: Always
                             tty: true
