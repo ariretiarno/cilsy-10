@@ -34,7 +34,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=dir://socmed/. --destination=cilsyari/socmed:$GIT_BRANCH-$BUILD_ID"
+                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=dir://socmed/. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                 }
             }
         }
