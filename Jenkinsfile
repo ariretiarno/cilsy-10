@@ -2,10 +2,41 @@ pipeline {
     agent any
     stages {
         stage ('build socmed') {
+            agent {
+                kubernetes {
+                    label 'jenkinsrun'
+                    defaultContainer 'builder'
+                    yaml """
+                        apiVersion: v1
+                        kind: Pod
+                        metadata:
+                          name: kaniko
+                        spec:
+                          containers:
+                          - name: builder
+                            image: gcr.io/kaniko-project/executor:latest
+                            imagePullPolicy: Always
+                            tty: true
+                            volumeMounts:
+                              - name: docker-config
+                                mountPath: /kaniko/.docker/
+                          restartPolicy: Never
+                          volumes:
+                            - name: docker-config
+                              projected:
+                                sources:
+                                - secret:
+                                    name: regcred
+                                    items:
+                                      - key: .dockerconfigjson
+                                        path: config.json
+                    """
+                }
+            }
             steps {
-                sh '''
-                    docker image ls
-                '''
+                script {
+                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=dir://socmed/. --destination=cilsyari/socmed:$GIT_BRANCH-$BUILD_ID"
+                }
             }
         }
         stage ('build landingpage') {
