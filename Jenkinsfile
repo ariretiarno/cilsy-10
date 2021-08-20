@@ -23,13 +23,12 @@ pipeline {
                           restartPolicy: Never
                           volumes:
                             - name: docker-config
-                              projected:
-                                sources:
-                                - secret:
-                                    name: regcred
-                                    items:
-                                      - key: .dockerconfigjson
-                                        path: config.json
+                              secret:
+                              secretName: regcred
+                              items:
+                               - key: .dockerconfigjson
+                                 path: config.json
+                            
                     """
                 }
             }
