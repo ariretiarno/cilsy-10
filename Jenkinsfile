@@ -4,8 +4,9 @@ pipeline {
         stage ('build socmed') {
             steps {
                 script {
-                     def customImage = docker.build("cilsyari/socmed:${env.GIT_BRANCH}-${env.BUILD_ID}", "socmed/ops/socmed.Dockerfile", "socmed/.")
-                     customImage.push()
+                    docker build -t cilsyari/socmed:$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
+                    docker login -u cilsyari -p$DOCKER_TOKEN
+                    docker push cilsyari/socmed:$GIT_BRANCH-$BUILD_ID
                 }
             }
         }
