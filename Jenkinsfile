@@ -3,11 +3,11 @@ pipeline {
     stages {
         stage ('build socmed') {
             steps {
-                script {
+                sh '''
                     docker build -t cilsyari/socmed:$GIT_BRANCH-$BUILD_ID -f socmed/ops/socmed.Dockerfile socmed/.
                     docker login -u cilsyari -p$DOCKER_TOKEN
                     docker push cilsyari/socmed:$GIT_BRANCH-$BUILD_ID
-                }
+                '''
             }
         }
         stage ('build landingpage') {
