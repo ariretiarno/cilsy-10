@@ -1,0 +1,23 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: ari
+         password: 12345
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:ari"
+        - "Overall/Read:authenticated"
+  remotingSecurity:
+    enabled: true
+security:
+  queueItemAuthenticator:
+    authenticators:
+    - global:
+        strategy: triggeringUsersAuthorizationStrategy
+unclassified:
+  location:
+    url: http://13.236.52.134:8080/
