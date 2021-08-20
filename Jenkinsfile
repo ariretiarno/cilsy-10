@@ -14,7 +14,7 @@ pipeline {
                         spec:
                           containers:
                           - name: jnlp
-                            image: gcr.io/kaniko-project/executor:latest
+                            image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
                             tty: true
                             volumeMounts:
