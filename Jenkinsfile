@@ -1,16 +1,16 @@
 pipeline {
-/*    agent any*/
+    agent any
     stages {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    label 'builder'
-                    defaultContainer 'builder'
+                    label 'agent'
+                    defaultContainer 'agent'
                     yaml """
                         apiVersion: v1
                         kind: Pod
                         metadata:
-                          name: kaniko
+                          name: agent
                         spec:
                           containers:
                           - name: jnlp
