@@ -16,10 +16,6 @@ pipeline {
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
-                            args:
-                            - "--dockerfile=socmed/ops/socmed.Dockerfile"
-                            - "--context=git://github.com/ariretiarno/cilsy-10.git"
-                            - "--destination=cilsyari/socmed:ari"
                             
                             volumeMounts:
                               - name: docker-config
@@ -39,7 +35,7 @@ pipeline {
             }
             steps {
                 script {
-                    /*sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"*/
+                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                     sh "echo hai"
                 }
             }
