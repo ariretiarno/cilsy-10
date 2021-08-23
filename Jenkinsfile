@@ -16,6 +16,10 @@ pipeline {
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:latest
                             imagePullPolicy: Always
+                            args:
+                            - "--dockerfile=socmed/ops/socmed.Dockerfile"
+                            - "--context=git://github.com/ariretiarno/cilsy-10.git"
+                            - "--destination=cilsyari/socmed:ari"
                             resources:
                                   requests:
                                     memory: "512Mi"
@@ -39,13 +43,7 @@ pipeline {
                             
                     """
                 }
-            }
-            steps {
-                script {
-                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
-                    sh "hai"
-                }
-            }
+            }            
         }
         stage ('build landingpage') {
             steps {
