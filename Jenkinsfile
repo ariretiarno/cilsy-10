@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     stages {
         stage ('build socmed') {
             agent {
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     /*sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"*/
-                    sh "hai"
+                    sh "echo hai"
                 }
             }
         }
