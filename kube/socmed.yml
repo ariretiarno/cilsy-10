@@ -26,6 +26,13 @@ spec:
       containers:
       - name: socmed 
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "200m"
+          limits:
+            memory: "256Mi"
+            cpu: "400m"
         image: cilsyari/socmed:branch-appversion
         ports:
         - containerPort: 8000

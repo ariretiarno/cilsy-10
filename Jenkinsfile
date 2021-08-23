@@ -16,28 +16,33 @@ pipeline {
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:latest
                             imagePullPolicy: Always
-                            args:
-                            - "--dockerfile=socmed/ops/socmed.Dockerfile"
-                            - "--context=dir://socmed/."
-                            - "--destination=cilsyari/socmed:ari"
+                            resources:
+                                  requests:
+                                    memory: "512Mi"
+                                    cpu: "500m"
+                                  limits:
+                                    memory: "1024Mi"
+                                    cpu: "1000m"
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
                           restartPolicy: Never
                           volumes:
-                            - name: docker-config
-                              secret:
-                              secretName: regcred
-                              items:
-                               - key: .dockerconfigjson
-                                 path: config.json
+                          - name: docker-config
+                            projected:
+                              sources:
+                              - secret:
+                                  name: regcred
+                                  items:
+                                    - key: .dockerconfigjson
+                                      path: config.json
                             
                     """
                 }
             }
             steps {
                 script {
-                    /*sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=dir://socmed/. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"*/
+                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                     sh "hai"
                 }
             }
