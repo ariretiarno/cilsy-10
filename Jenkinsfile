@@ -20,13 +20,6 @@ pipeline {
                             - "--dockerfile=socmed/ops/socmed.Dockerfile"
                             - "--context=git://github.com/ariretiarno/cilsy-10.git"
                             - "--destination=cilsyari/socmed:ari"
-                            resources:
-                                  requests:
-                                    memory: "512Mi"
-                                    cpu: "500m"
-                                  limits:
-                                    memory: "1024Mi"
-                                    cpu: "1000m"
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
