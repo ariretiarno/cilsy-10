@@ -4,13 +4,13 @@ pipeline {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    label 'agent'
-                    defaultContainer 'agent'
+                    label 'builder'
+                    defaultContainer 'builder'
                     yaml """
                         apiVersion: v1
                         kind: Pod
                         metadata:
-                          name: agent
+                          name: builder
                         spec:
                           containers:
                           - name: jnlp
