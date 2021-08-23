@@ -4,8 +4,8 @@ pipeline {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    label 'builder'
-                    defaultContainer 'builder'
+                    /*label 'builder'
+                    defaultContainer 'builder'*/
                     yaml """
                         apiVersion: v1
                         kind: Pod
@@ -23,7 +23,6 @@ pipeline {
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
-                          restartPolicy: Never
                           volumes:
                           - name: docker-config
                             projected:
