@@ -13,16 +13,14 @@ pipeline {
                           name: builder
                         spec:
                           containers:
-                          - name: builder
+                          - name: jnlp
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
                             args:
                             - "--dockerfile=socmed/ops/socmed.Dockerfile"
                             - "--context=git://github.com/ariretiarno/cilsy-10.git"
                             - "--destination=cilsyari/socmed:ari"
-                            command:
-                            - /busybox/cat
-                            tty: true
+                            
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
