@@ -4,8 +4,8 @@ pipeline {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    label 'builder'
-                    defaultContainer 'builder'
+                    /*label 'builder'
+                    defaultContainer 'builder'*/
                     yaml """
                         apiVersion: v1
                         kind: Pod
@@ -20,7 +20,9 @@ pipeline {
                             - "--dockerfile=socmed/ops/socmed.Dockerfile"
                             - "--context=git://github.com/ariretiarno/cilsy-10.git"
                             - "--destination=cilsyari/socmed:ari"
-                            
+                            command:
+                            - /busybox/cat
+                            tty: true
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
