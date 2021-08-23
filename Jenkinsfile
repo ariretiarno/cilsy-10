@@ -16,7 +16,9 @@ pipeline {
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
-                            
+                            command:
+                            - /busybox/cat
+                            tty: true
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
