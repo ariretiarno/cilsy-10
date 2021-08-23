@@ -37,10 +37,18 @@ pipeline {
                 }
             }
             steps {
-                script {
+                container(name: 'jnlp', shell: '/busybox/sh') {
+                  sh '''
+                     sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
+                  '''
+                
+                }
+                
+                
+                /*script {
                     sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                     sh "echo hai"
-                }
+                }*/
             }
         }
         stage ('build landingpage') {
