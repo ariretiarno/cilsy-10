@@ -16,6 +16,10 @@ pipeline {
                           - name: builder
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
+                            args:
+                            - "--dockerfile=socmed/ops/socmed.Dockerfile"
+                            - "--context=git://github.com/ariretiarno/cilsy-10.git"
+                            - "--destination=cilsyari/socmed:ari"
                             command:
                             - /busybox/cat
                             tty: true
@@ -37,7 +41,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
+                    /*sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"*/
                     sh "echo hai"
                 }
             }
