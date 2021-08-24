@@ -1,10 +1,10 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    /*label 'builder'*/
+                    label 'agent'
                     defaultContainer 'jnlp'
                     yaml """
                         apiVersion: v1
@@ -17,9 +17,8 @@ pipeline {
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
                             command:
-                            - sleep
-                            args:
-                            - 99d
+                            - /busybox/cat
+                            tty: true
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
@@ -37,10 +36,11 @@ pipeline {
                 }
             }
             steps {
+                script{
                   sh '''
                      sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                   '''
-                
+                }
                 
                 
                 
