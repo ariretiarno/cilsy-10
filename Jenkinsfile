@@ -16,10 +16,6 @@ pipeline {
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
-                            command:
-                            - sleep
-                            args:
-                            - 9999999
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
