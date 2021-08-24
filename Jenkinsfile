@@ -4,18 +4,22 @@ pipeline {
         stage ('build socmed') {
             agent {
                 kubernetes {
-                    /*label 'builder'
-                    defaultContainer 'builder'*/
+                    /*label 'builder'*/
+                    defaultContainer 'jnlp'
                     yaml """
                         apiVersion: v1
                         kind: Pod
                         metadata:
-                          name: builder
+                          name: jnlp
                         spec:
                           containers:
                           - name: jnlp
                             image: gcr.io/kaniko-project/executor:debug
                             imagePullPolicy: Always
+                            command:
+                            - sleep
+                            args:
+                            - 99d
                             volumeMounts:
                               - name: docker-config
                                 mountPath: /kaniko/.docker/
@@ -33,12 +37,11 @@ pipeline {
                 }
             }
             steps {
-                container(name: 'jnlp', shell: '/busybox/sh') {
                   sh '''
                      sh "/kaniko/executor --dockerfile=socmed/ops/socmed.Dockerfile --context=git://github.com/ariretiarno/cilsy-10.git. --destination=cilsyari/socmed:${GIT_BRANCH}-${BUILD_ID}"
                   '''
                 
-                }
+                
                 
                 
                 /*script {
