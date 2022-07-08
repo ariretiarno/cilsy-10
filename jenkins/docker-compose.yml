@@ -1,0 +1,10 @@
+version: '3.6'
+services:
+  jenkins:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./jenkins-home:/var/jenkins_home
